@@ -1,2 +1,0 @@
-# BUSSide
-The BUSSide
