@@ -29,6 +29,7 @@ read_I2C_eeprom(struct bs_request_s *request)
   reply_data = (uint8_t *)&reply->bs_payload[0];
   
   Wire.begin(gpioIndex[sdaPin], gpioIndex[sclPin]);  
+  Wire.setClock(10000);
   
   Wire.beginTransmission(slaveAddress);
   switch (addressLength) {
@@ -135,8 +136,7 @@ write_I2C_eeprom(struct bs_request_s *request)
   return reply;
 }
 
-static void
-I2C_active_scan1(struct bs_request_s *request, struct bs_reply_s *reply, int sdaPin, int sclPin)
+static void I2C_active_scan1(struct bs_request_s *request, struct bs_reply_s *reply, int sdaPin, int sclPin)
 {
   uint32_t *reply_data;
   int numberOfSlaves;
@@ -186,8 +186,7 @@ I2C_active_scan1(struct bs_request_s *request, struct bs_reply_s *reply, int sda
   }
 }
 
-struct bs_frame_s*
-I2C_active_scan(struct bs_request_s *request)
+struct bs_frame_s* I2C_active_scan(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args;
@@ -210,8 +209,7 @@ I2C_active_scan(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-discover_I2C_slaves(struct bs_request_s *request)
+struct bs_frame_s* discover_I2C_slaves(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args, *reply_data;

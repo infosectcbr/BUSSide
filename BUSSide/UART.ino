@@ -1,6 +1,5 @@
 #include <pins_arduino.h>
 #include "BUSSide.h"
-#include <SoftwareSerial.h>
 
 //#define min(a,b) (((a)<(b))?(a):(b))
 
@@ -29,8 +28,7 @@ struct uartInfo_s {
 
 static int uartSpeedIndex;
 
-static unsigned int
-findNumberOfUartSpeeds(void)
+static unsigned int findNumberOfUartSpeeds(void)
 {
   unsigned int i;
 
@@ -38,8 +36,7 @@ findNumberOfUartSpeeds(void)
   return i;
 }
 
-static int
-waitForIdle(int pin)
+static int waitForIdle(int pin)
 {
   unsigned long startTime;
   unsigned long bitTime10;
@@ -60,8 +57,7 @@ start:
   return 0;
 }
 
-static int
-buildwidths(int pin, int *widths, int nwidths)
+static int buildwidths(int pin, int *widths, int nwidths)
 {
   int val;
   int32_t startTime;
@@ -90,8 +86,7 @@ buildwidths(int pin, int *widths, int nwidths)
   return 0;
 }
 
-static unsigned int
-findminwidth(int *widths, int nwidths)
+static unsigned int findminwidth(int *widths, int nwidths)
 {
   int minIndex1;
   unsigned int min1;
@@ -107,8 +102,7 @@ findminwidth(int *widths, int nwidths)
 }
 
 
-static float
-autobaud(int pin, int *widths, int nwidths)
+static float autobaud(int pin, int *widths, int nwidths)
 {
   int sum;
   int c = 0;
@@ -123,8 +117,7 @@ autobaud(int pin, int *widths, int nwidths)
   return (float)sum/(float)c;
 }
 
-static int
-tryFrameSize(int framesize, int stopbits, int *widths, int nwidths)
+static int tryFrameSize(int framesize, int stopbits, int *widths, int nwidths)
 {
   float width_timepos = 0.0;
   float bitTime = uartInfo[uartSpeedIndex].microsDelay;
@@ -149,8 +142,7 @@ tryFrameSize(int framesize, int stopbits, int *widths, int nwidths)
   return 1;
 }
 
-static int
-calcBaud(int pin, int *widths, int nwidths)
+static int calcBaud(int pin, int *widths, int nwidths)
 {
   char fstr[6];
   char s[100];
@@ -179,8 +171,7 @@ calcBaud(int pin, int *widths, int nwidths)
   return baudIndex;
 }
 
-static int
-calcParity(int frameSize, int stopBits, int *widths, int nwidths)
+static int calcParity(int frameSize, int stopBits, int *widths, int nwidths)
 {
   float width_timepos = 0.0;
   float bitTime = uartInfo[uartSpeedIndex].microsDelay;
@@ -243,8 +234,7 @@ static float bitTime;
 
 #define NWIDTHS 200
 
-static int
-UART_line_settings_direct(struct bs_reply_s *reply, int index)
+static int UART_line_settings_direct(struct bs_reply_s *reply, int index)
 {
   int widths[NWIDTHS];
   char s[100];
@@ -309,8 +299,7 @@ UART_line_settings_direct(struct bs_reply_s *reply, int index)
   return 0;
 }
 
-struct bs_frame_s*
-UART_all_line_settings(struct bs_request_s *request)
+struct bs_frame_s* UART_all_line_settings(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   int u = 0;
@@ -342,8 +331,7 @@ UART_all_line_settings(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-data_discovery(struct bs_request_s *request)
+struct bs_frame_s* data_discovery(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *reply_data;
@@ -381,8 +369,7 @@ data_discovery(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-UART_passthrough(struct bs_request_s *request)
+struct bs_frame_s* UART_passthrough(struct bs_request_s *request)
 {
   uint32_t *request_args;
   int rxpin, txpin;
@@ -410,8 +397,7 @@ UART_passthrough(struct bs_request_s *request)
   return NULL;
 }
 
-int
-UART_testtx(SoftwareSerial *ser, int testChar)
+int UART_testtx(SoftwareSerial *ser, int testChar)
 {
   ser->write(testChar);
   for (int i = 0; i < 10000; i++) {
@@ -430,8 +416,7 @@ UART_testtx(SoftwareSerial *ser, int testChar)
   return 0;
 }
 
-struct bs_frame_s*
-UART_discover_tx(struct bs_request_s *request)
+struct bs_frame_s* UART_discover_tx(struct bs_request_s *request)
 {
   uint32_t *request_args, *reply_data;
   struct bs_frame_s *reply;

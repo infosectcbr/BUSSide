@@ -1,7 +1,6 @@
 #include <Boards.h>
 #include <pins_arduino.h>
 #include "BUSSide.h"
-//#include <ESP8266WiFi.h>
 
 #define microsTime()  ((uint32_t)(asm_ccount() - (int32_t)usTicks)/FREQ)
 
@@ -62,14 +61,35 @@ reset_gpios()
   }
 }
 
-void
-setup()
+static void FlushIncoming()
+{
+  while (Serial.available() > 0) {
+    (void)Serial.read();
+  }
+}
+
+#define LED D0
+
+void flashLED(int n, int micro)
+{
+  pinMode(LED, OUTPUT);
+  for (int i = 0; i < n; i++) {
+    digitalWrite(LED, HIGH);
+    delay(micro);
+    digitalWrite(LED, LOW);
+    delay(micro);
+  }
+  reset_gpios();
+}
+
+void setup()
 {
 //  WiFi.mode(WIFI_OFF);
   reset_gpios();
   Serial.begin(500000);
   while (!Serial);
-  Serial.printf("Welcome to the BUSSide!\n");
+  Serial.printf("Welcome to the BUSSide!\r\n");
+  FlushIncoming();
   usTicks = asm_ccount();
 }
 
@@ -88,28 +108,22 @@ send_reply(struct bs_request_s *request, struct bs_reply_s *reply)
     Serial.flush();
 }
 
-static void
-FlushIncoming()
-{
-  while (Serial.available() > 0) {
-    (void)Serial.read();
-  }
-}
-
-static void
-Sync()
+static void Sync()
 {
   while (1) {
-    int rv;
-    int ch;
-    
-    rv = Serial.readBytes((uint8_t *)&ch, 1);
-    if (rv <= 0)
+    size_t rv;
+    uint8_t ch;
+
+    ch = 0;
+    rv = Serial.readBytes(&ch, 1);
+    if (rv != 1)
       continue;
-    if (ch == 0xfe) {
+      if (ch == 0xfe) {
+ //     flashLED(100,200);
 got1:
-      rv = Serial.readBytes((uint8_t *)&ch, 1);
-      if (rv <= 0)
+      ch = 0;
+      rv = Serial.readBytes(&ch, 1);
+      if (rv != 1)
         continue;
       if (ch == 0xca)
         return;
@@ -119,8 +133,7 @@ got1:
   }
 }
 
-void
-loop()
+void loop()
 {
     struct bs_frame_s header;
     struct bs_frame_s *request, *reply;

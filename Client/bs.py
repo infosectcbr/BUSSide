@@ -70,6 +70,11 @@ def FlushInput():
 
     myserial.flushInput()
 
+def FlushOutput():
+    global myserisl
+
+    myserial.flushOutput()
+
 def Sync():
     global myserial
 
@@ -217,7 +222,9 @@ def Connect(device, ltimeout=2, nretries=10):
         try:
             myserial = serial.Serial(mydevice, 500000, timeout=mytimeout)
             FlushInput()
+            FlushOutput()
             request_args = []
+
             if nretries > 0:
                 print("+++ Sending echo command")
                 rv = requestreply(0, request_args, 1)

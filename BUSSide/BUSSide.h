@@ -1,6 +1,8 @@
 #ifndef BUSSIDE_H
 #define BUSSIDE_H
 
+#include <SoftwareSerial.h>
+
 #define FREQ 160
 #define N_GPIO 9
 

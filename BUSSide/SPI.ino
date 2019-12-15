@@ -6,8 +6,7 @@
 int write_enable(uint32_t spispeed);
 int write_disable(uint32_t spispeed);
 
-static uint8_t
-spi_transfer_byte(int spispeed, int gpio_CS, int gpio_CLK, int gpio_MOSI, int gpio_MISO, uint8_t data)
+static uint8_t spi_transfer_byte(int spispeed, int gpio_CS, int gpio_CLK, int gpio_MOSI, int gpio_MISO, uint8_t data)
 {
   uint8_t x = 0;
 
@@ -33,8 +32,7 @@ spi_transfer_byte(int spispeed, int gpio_CS, int gpio_CLK, int gpio_MOSI, int gp
   return x;
 }
 
-static int
-spi_bb_send_fast_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *out, uint32_t wrsize, uint8_t *in, int rdsize)
+static int spi_bb_send_fast_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *out, uint32_t wrsize, uint8_t *in, int rdsize)
 {
   pinMode(gpioIndex[cs], OUTPUT);
   pinMode(gpioIndex[clk], OUTPUT);
@@ -60,8 +58,7 @@ spi_bb_send_fast_command(int spispeed, int cs, int clk, int mosi, int miso, uint
   return 0;
 }
 
-static int
-spi_hw_bb_send_fast_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *out, uint32_t wrsize, uint8_t *in, int rdsize)
+static int spi_hw_bb_send_fast_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *out, uint32_t wrsize, uint8_t *in, int rdsize)
 {
   pinMode(CS_GPIO, OUTPUT);
   digitalWrite(CS_GPIO, HIGH);
@@ -83,8 +80,7 @@ spi_hw_bb_send_fast_command(int spispeed, int cs, int clk, int mosi, int miso, u
 
   return 0;
 }
-static int
-spi_bb_send_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *in, uint8_t *out, int n)
+static int spi_bb_send_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *in, uint8_t *out, int n)
 {
   pinMode(gpioIndex[cs], OUTPUT);
   pinMode(gpioIndex[clk], OUTPUT);
@@ -106,8 +102,7 @@ spi_bb_send_command(int spispeed, int cs, int clk, int mosi, int miso, uint8_t *
   return 0;
 }
 
-struct bs_frame_s*
-spi_read_id_bb(struct bs_request_s *request)
+struct bs_frame_s* spi_read_id_bb(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args;
@@ -139,8 +134,7 @@ spi_read_id_bb(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-spi_command_finder(struct bs_request_s *request)
+struct bs_frame_s* spi_command_finder(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args, *reply_data;
@@ -186,8 +180,7 @@ spi_command_finder(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-spi_discover(struct bs_request_s *request)
+struct bs_frame_s* spi_discover(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args, *reply_data;
@@ -244,8 +237,7 @@ spi_discover(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-SPI_read_id(struct bs_request_s *request)
+struct bs_frame_s* SPI_read_id(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args, *reply_data;
@@ -277,8 +269,7 @@ SPI_read_id(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-hw_send_SPI_command(struct bs_request_s *request)
+struct bs_frame_s* hw_send_SPI_command(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t *request_args;
@@ -314,8 +305,7 @@ hw_send_SPI_command(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-send_SPI_fast_command(struct bs_request_s *request)
+struct bs_frame_s* send_SPI_fast_command(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t cmdsize;
@@ -348,8 +338,7 @@ send_SPI_fast_command(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-send_SPI_command(struct bs_request_s *request)
+struct bs_frame_s* send_SPI_command(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t cmdsize;
@@ -388,8 +377,7 @@ send_SPI_command(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-read_SPI_flash(struct bs_request_s *request)
+struct bs_frame_s* read_SPI_flash(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t readsize, skipsize, spispeed;
@@ -427,8 +415,7 @@ read_SPI_flash(struct bs_request_s *request)
   return reply;
 }
 
-struct bs_frame_s*
-erase_sector_SPI_flash(struct bs_request_s *request)
+struct bs_frame_s* erase_sector_SPI_flash(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint32_t skipsize, spispeed;
@@ -465,8 +452,7 @@ erase_sector_SPI_flash(struct bs_request_s *request)
   return reply;
 }
 
-int
-write_disable(uint32_t spispeed)
+int write_disable(uint32_t spispeed)
 {
   pinMode(CS_GPIO, OUTPUT);
   digitalWrite(CS_GPIO, HIGH);
@@ -480,8 +466,7 @@ write_disable(uint32_t spispeed)
   return 0;
 }
 
-int
-write_enable(uint32_t spispeed)
+int write_enable(uint32_t spispeed)
 {
   pinMode(CS_GPIO, OUTPUT);
   digitalWrite(CS_GPIO, HIGH);
@@ -496,8 +481,7 @@ write_enable(uint32_t spispeed)
 
 }
 
-struct bs_frame_s*
-disable_write_protection(struct bs_request_s *request)
+struct bs_frame_s* disable_write_protection(struct bs_request_s *request)
 {
   struct bs_frame_s *reply;
   uint8_t s1, s2;
