@@ -7,12 +7,20 @@ To flash the firmware:
 
 # apt-get install esptool
 # git clone http://github.com/BSidesCbr/BUSSide.git
-# esptool --port /dev/ttyUSB0 write_flash 0x00000 BUSSide/FirmwareImages/*.bin
+# cd BUSSide
+# ./flash_busside.sh /dev/ttyUSB0
+
+This assumes the BUSSide is detected as /dev/ttyUSB0. If it's detect as
+/dev/ttyUSB1, or otherwise, use that instead.
+
+To use the BUSSide:
 
 # cd BUSSide/Client
 # ./busside.py /dev/ttyUSB0
 
-To build from source:
+==
 
-Please install https://github.com/plerup/espsoftwareserial in your Arduino
-libraries.
+If you wan't to flash the BUSSide using a different firmware image, then
+try:
+
+# esptool --port /dev/ttyUSB0 write_flash 0x00000 BUSSide/FirmwareImages/xx.bin
