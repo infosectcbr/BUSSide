@@ -4,8 +4,10 @@ Welcome to using the BUSSide!
 
 ## How to assemble
 
-![](https://busside.com.au/assets/img/gg/BUSSide_Front.jpeg|height=400)
-![](https://busside.com.au/assets/img/gg/BUSSide_Back.jpeg|height=400)
+This document has images for the BUSSide v1. v1 has been replaced with the current v2 model. The software is the same between v1 and v2, but the physical layout of the board has changed in v2. Take note when using it and make sure your pinout is correct!
+
+![](https://busside.com.au/assets/img/gg/BUSSide_Front.jpeg)
+![](https://busside.com.au/assets/img/gg/BUSSide_Back.jpeg)
 
 * 4 x 4-pin female header strips
 * 1 x 10-pin male header strip
@@ -32,11 +34,11 @@ To install the NodeMCU v1.0 board into the Arduino IDE do the following:
 
 Go into the IDE under File -> Preferences and in “Additional Boards Manager URLs” add “http://arduino.esp8266.com/stable/package_esp8266com_index.json”
 
-[[File:Arduino-file-preferences.jpg|400px]]
+![](https://busside.com.au/assets/img/gg/Arduino-file-preferences.jpg)
 
 Now go to Tools -> Boards -> Boards Manager. Search for esp8266 and install the package.
 
-[[File:Arduino-boards-manager.jpg|400px]]
+![](https://busside.com.au/assets/img/gg/Arduino-boards-manager.jpg)
 
 Now go to Tools -> Boards and select the NodeMCU 1.0
 
@@ -83,20 +85,20 @@ The controller software is written in Python. To use it, go into the working dir
 The BUSSide can be used in a number of different ways. The following list shows the functions of the BUSSide.
 
 UART
-* Detecting UART
-* UART passthrough
+- Detecting UART
+- UART passthrough
 
 JTAG
-* Detecting JTAG
+- Detecting JTAG
 
 SPI
-* Dumping SPI Flash
-* Reading ID of SPI Flash Device
+- Dumping SPI Flash
+- Reading ID of SPI Flash Device
 
 I2C
-* Detecting I2C
-* I2C Slave Discovery
-* Dumping I2C Flash
+- Detecting I2C
+- I2C Slave Discovery
+- Dumping I2C Flash
 
 You plug in your Busside via USB. Remember, use Linux and USB passthrough. You will need to connect the BUSSide to the device that you're testing. More on this is presented later for connecting ground and the GPIO pins. Lets assume you've connected the BUSSide to the device.
 
@@ -106,7 +108,7 @@ The BUSSide is ready to take commands.
 
 The first thing you want to do to use the BUSSide on a device is to identify the ground pin on the headers you are interrogating. It's quite easy to determine ground pins. You take your multimeter and put it into the continuity test mode. Now you connect one probe to the pin you are testing and the other probe to somewhere on the ground plane. The ground plane often includes things like metal shielding internal to the device. If that doesn't work, you might need to connect it to ground on the DC socket. If your multimeter beeps, you have identified a ground pin. If you can't detect any ground pins, you might not have found the ground plane. Try any other shielding if it is available.
 
-[[File:Finding_ground.JPG|400px]]
+![](https://busside.com.au/assets/img/gg/Finding_ground.JPG)
 
 Now you need to connect the ground pin on the device to the BUSSide.
 
@@ -170,7 +172,7 @@ To perform the detection, the UART must be transmitting data. The easiest way to
 
 Here is an example of detecting UART in a DLINK DSL-502T ADSL router:
 
-[[File:BUSSide_UART.jpeg|400px]]
+![](https://busside.com.au/assets/img/gg/BUSSide_UART.jpeg)
 
 ```
 > uart discover rx
@@ -243,7 +245,7 @@ dev      lib      sbin     var
 
 The BUSSide can detect JTAG pinouts if JTAG is present. This is similar to what the JTagulator does.
 
-[[File:BUSSide_JTAG.jpeg|400px]]
+![](https://busside.com.au/assets/img/gg/BUSSide_JTAG.jpeg)
 
 ```
 > jtag discover pinout
@@ -295,7 +297,7 @@ If you have identified a SPI serial flash chip on a board, you can dump the flas
 
 There are multiple ways of physically interfacing with an SPI chip. You can desolder the chip and use the supplied SOP8/SOIC8 to DIP adapters. The top DIP adapter on the BUSSide is the SPI interface. Below it is the I2C interface. Another option is using something like a Pomona test clip and attaching the jumpers to the BUSSide. In this scenario, you don't need to desolder the chip.
 
-[[File:Spi_pinout.png|200px]]
+![](https://busside.com.au/assets/img/gg/Spi_pinout.png)
 
 The important pins are MOSI, MISO, SCK, and GND. HOLD is also required for serial flash.
 
@@ -303,7 +305,7 @@ The BUSSide dumps SPI serial flash much faster than the Bus Pirate v3.6. The Bus
 
 You also need to specify an output file. In the command below, we're dumping 100,00 bytes into the file 1.bin.
 
-[[File:BUSSide_SPI_Dumping_2.jpeg|400px]]
+![](https://busside.com.au/assets/img/gg/BUSSide_SPI_Dumping_2.jpeg)
 
 ```
 > spi flash dump 100000 1.bin
@@ -513,13 +515,13 @@ Attach the ground pin, and connect the GPIOS. You can't use GPIO 1.
 
 Like the SPI interface, you can interface with I2C on the BUSSide using the DIP adapter or using jumpers. The pinout is as follows.
 
-[[File:I2c_pinout.png|200px]]
+![](https://busside.com.au/assets/img/gg/I2c_pinout.png)
 
 The requires pins are SDA (data), SCL (clock), and VSS (ground). You don't have to supply power if you are attaching to a powered on device via jumpers.
 
 Here I've attached the BUSSide to a digital answering machine which exposes an I2C EEPROM.
 
-[[File:BUSSide_I2C_Dumping.jpeg|400px]]
+![](https://busside.com.au/assets/img/gg/BUSSide_I2C_Dumping.jpeg)
 
 Each I2C device has an 'address'. GPIO 9 is SDA and GPIO 2 is SCL. To discover this address, we use the following:
 
