@@ -4,7 +4,7 @@ Welcome to using the BUSSide!
 
 ## How to assemble
 
-![](https://busside.com.au/assets/img/gg/BUSSide_Front.jpeg|width=400) [[File:BUSSide_Back.jpeg|400px]]
+![](https://busside.com.au/assets/img/gg/BUSSide_Front.jpeg|height=400)![](https://busside.com.au/assets/img/gg/BUSSide_Back.jpeg|height=400]]
 
 * 4 x 4-pin female header strips
 * 1 x 10-pin male header strip
